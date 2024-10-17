@@ -1,0 +1,38 @@
+---------- Kafka_connect -------------
+1. Kafka_connect là gì?
+	- Kafka Connect là một thành phần trong hệ sinh thái của Apache Kafka.
+	
+	- Được thiết kế để giúp dễ dàng kết nối Kafka với các hệ thống dữ liệu bên ngoài như cơ sở dữ liệu, hệ thống lưu trữ, công cụ phân tích, và các dịch vụ khác.
+	
+2. Chức năng
+	- Chức năng chính: Kafka Connect đóng vai trò là cầu nối giữa Kafka và các hệ thống nguồn (source systems) hoặc hệ thống đích (sink systems).
+	
+	- Nó giúp tự động hóa việc di chuyển dữ liệu vào và ra khỏi Kafka, đồng thời duy trì tính liên tục và độ tin cậy cao cho quá trình truyền tải dữ liệu.
+	
+	- Không cần viết code tùy chỉnh: Người dùng có thể sử dụng các connectors có sẵn, giúp tiết kiệm thời gian và giảm thiểu các lỗi khi tích hợp.
+	
+3. Kiến trúc
+Connectors: Đây là các thành phần plugin dùng để giao tiếp với các hệ thống nguồn và đích. Có hai loại connectors:
+	Source Connectors: Đọc dữ liệu từ các hệ thống bên ngoài và ghi vào Kafka. Ví dụ: đọc từ MySQL, MongoDB, hoặc các dịch vụ HTTP.
+
+	Sink Connectors: Lấy dữ liệu từ Kafka và đẩy vào các hệ thống khác. Ví dụ: ghi vào Elasticsearch, HDFS, hoặc hệ quản trị cơ sở dữ liệu như PostgreSQL.
+	
+Tasks: Mỗi connector có thể được chia thành nhiều tasks để xử lý dữ liệu song song, giúp tăng khả năng mở rộng và hiệu suất.
+
+Workers: Workers là các thực thể chạy Kafka Connect, chúng chịu trách nhiệm khởi động, quản lý, và điều phối các tasks. Workers có thể chạy ở chế độ độc lập (standalone mode) hoặc trong cụm (distributed mode) để đảm bảo tính sẵn sàng cao.
+
+4.Ưu điểm
+	- Tích hợp nhanh chóng: Giảm thời gian cần thiết để tích hợp với các hệ thống khác bằng cách sử dụng các connectors có sẵn.
+	
+	- Khả năng mở rộng và chịu lỗi: Các tasks của Kafka Connect có thể chạy song song, và cụm distributed giúp hệ thống dễ dàng mở rộng khi cần thiết.
+	
+	- Tự động quản lý offsets: Kafka Connect tự động quản lý các offsets của dữ liệu, giúp đảm bảo tính liên tục của dữ liệu trong trường hợp xảy ra sự cố hoặc khởi động lại.
+	
+	- Dễ dàng cấu hình và theo dõi: Các connectors có thể được cấu hình thông qua file cấu hình đơn giản hoặc API RESTful, giúp quản lý và giám sát hệ thống dễ dàng.
+
+5. Ứng dụng
+	- Di chuyển dữ liệu từ cơ sở dữ liệu vào Kafka: Sử dụng source connectors để lấy dữ liệu từ các hệ quản trị cơ sở dữ liệu (như MySQL, PostgreSQL) và đưa vào Kafka để xử lý thời gian thực.
+	
+	- Xuất dữ liệu từ Kafka sang hệ thống lưu trữ: Sử dụng sink connectors để lấy dữ liệu từ Kafka và lưu trữ vào Elasticsearch, HDFS, hoặc các dịch vụ đám mây.
+	
+	- Tích hợp với các dịch vụ dữ liệu lớn: Kết nối Kafka với các công cụ phân tích dữ liệu lớn như Apache Hadoop, Apache Spark để xây dựng các pipeline dữ liệu.

@@ -1,0 +1,61 @@
+------ Kafka -------------
+1. Bài toán thực tế
+	- Hiện này các doanh nghiệp sử dụng real-time data để cải thiện dịch vụ khách hàng, quản lý sản phẩm và tối ưu hóa vận hành.
+	- Nhận biết được những lợi ích trên, nhu cầu thu thập real-time data ngày càng tăng cao ở khắp các doanh nghiệp toàn thế giới.
+==> Chính vì thế, những công cụ có khả năng thu thập và lưu trữ dữ liệu thời gian thực ngày càng trở nên được “săn đón”, Kafka chính là một trong những công cụ đó.
+
+2. Kafka là gì?
+	- là một nền tảng streaming phân tán sự kiện (distributed event streaming), chủ yếu được áp dụng làm hệ thống phân tán.
+	- “vận chuyển” tin nhắn và thu thập, xử lý, lưu trữ và phân tích dữ liệu ở quy mô lớn.
+	-  Kafka trước đây được phát triển bởi LinkedIn, hiện tại thuộc Apache.
+3. Kiến trúc 
+Cluster:
+	- Một tập hợp các máy chủ Brokers bao gồm ít nhất 1 Broker.
+	- Cluster Kafka có vai trò quan trọng trong việc cung cấp tính mở rộng, tính nhất quán và độ tin cậy cho việc xử lý dữ liệu thời gian thực.
+Broker:
+	- Là thành phần cốt lõi của Apache Kafka, đại diện cho máy chủ xử lý và lưu trữ dữ liệu Kafka.
+	- Broker chịu trách nhiệm quản lý và lưu trữ các Partition của các chủ đề Topics.
+Topics:
+	- Dữ liệu trong Apache Kafka được phân loại thành các chủ đề Topics, mỗi topic được coi là 1 luồng dữ liệu độc lập.
+	- Producer gửi dữ liệu tới các Topic và Consumer đọc dữ liệu từ các Topic. 
+	- Topics cho phép các ứng dụng chỉ quan tâm tới dữ liệu mà nó muốn nhận.
+Partition:
+	- Partition là một phần nhỏ của Topics và đóng vai trò quan trọng trong việc phân tán dữ liệu và tăng hiệu suất 
+	- Mỗi Partition được lưu trữ trển một Broker và dữ liệu được đọc và ghi vào từng Partition một.
+Producer: 
+	- Cho phép ứng dụng gửi dữ liệu tới topics và sử dựng giao thức để đưa vào các partition.
+Consumer:
+	- Cho phép ứng dụng lấy dữ liệu từ topic kafka.
+	- Có thể có nhiều Consumer đọc từ cùng 1 Topic và Kafka đảm bảo rằng mỗi tin nhắn chỉ được đọc bởi 1 Consumer.
+Zookeeper: được sử dụng để quản lý và duy trì trạng thái của các Broker trong một cụm Kafka, các broker nói chuyện qua zookeeper.
+4.Ứng dụng Kafka
+	- Stream Processing: Kafka có thể làm việc với các công cụ như Apache Storm, Apache Flink, hoặc Apache Spark để xử lý dữ liệu dòng thời gian thực, 
+	ví dụ như phân tích log, theo dõi các hoạt động giao dịch.
+	- Hệ thống thu thập log: Kafka có thể thu thập log từ nhiều nguồn khác nhau và gửi chúng đến hệ thống lưu trữ hoặc giám sát như Elasticsearch hay Splunk.
+	- Định tuyến thông điệp và tích hợp ứng dụng: Kafka giúp giao tiếp giữa các thành phần khác nhau trong một hệ thống lớn, đặc biệt trong môi trường microservices.
+5. Tính năng
+Xử lý dữ liệu thời gian thực (Real-time): 
+	- Kafka được thiết kế để xử lý và truyền tải một lượng lớn dữ liệu trong thời gian thực, giúp thu thập và phân tích dữ liệu ngay khi nó được tạo ra.
+Khả năng mở rộng (Scalability): 
+	- Kafka có thể mở rộng một cách dễ dàng bằng cách thêm nhiều brokers vào cụm. 
+	- Nó cũng có thể xử lý hàng triệu thông điệp mỗi giây mà vẫn giữ được độ tin cậy và hiệu suất cao.
+Độ bền dữ liệu (Durability): 
+	- Kafka đảm bảo dữ liệu sẽ không bị mất nhờ vào tính năng ghi đè nhiều lần (replication). 
+	- Mỗi partition có thể được sao chép sang nhiều broker để đảm bảo rằng dữ liệu vẫn tồn tại ngay cả khi một số broker gặp sự cố.
+6. Cơ chế hoạt động
+Apache Kafka là một giải pháp mạnh mẽ cho kiến trúc Publish-Subscribe (Pub-Sub), giúp các ứng dụng xử lý dữ liệu thời gian thực có thể trao đổi thông tin một cách hiệu quả và đáng tin cậy
+	- Kafka Producer gửi message đến Topic.
+	- Kafka Broker lưu trữ tất cả các message trong các partition được định cấu hình topic cụ thể đó, đảm bảo rằng các message được phân phối cân bằng giữa các partition.
+	- Kafka Consumer subscribes một topic cụ thể.
+	- Sau khi Consumer subscribes vào một topic, Kafka cung cấp offset hiện tại của topic cho Consumer và lưu nó trong Zookeeper.
+	- Consumer sẽ liên tục gửi request đến Kafka để pull về các message mới.
+	- Kafka sẽ chuyển tiếp tin nhắn đến Consumer ngay khi nhận được từ Producer.
+	- Consumer sẽ nhận được message và xử lý nó.
+	- Kafka Broker nhận được xác nhận về message được xử lý.
+	- Kafka cập nhật giá trị offset hiện tại ngay khi nhận được xác nhận. Ngay cả trong khi máy chủ outrages, consumer có thể đọc được message tiếp theo một cách chính xác, bởi Zookeeper quản lý các offset.
+	- Quy trình này lặp lại cho đến khi consumer dừng việc subcribes lại.
+
+7. Tài liệu tham khảo
+https://viblo.asia/p/tong-quan-ve-apache-kafka-he-thong-xu-ly-du-lieu-thoi-gian-thuc-phan-tan-5OXLA5XkLGr
+
+https://www.youtube.com/watch?v=a7lmP5hdgB0&list=PLw0w5s5b9NK4yji-f3c3L7htTJjiyhRDa&index=3
