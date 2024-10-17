@@ -1,0 +1,26 @@
+------ Fluentd ---------------
+	Fluentd là một công cụ thu thập và phân tích log mã nguồn mở phổ biến, dùng để thu thập,
+	chuyển đổi, lưu trữ và truyền tải các log từ nhiều nguồn khác nhau đến các hệ thống lưu trữ hoặc phân tích.
+1.Kiến trúc
+	- Input: Thu thập log từ các nguồn khác nhau như file, hệ thống ứng dụng, cơ sở dữ liệu, hay API.
+	
+	- Filters: Chuyển đổi và xử lý log, cho phép lọc, thay đổi định dạng, hoặc thêm các trường thông tin bổ sung.
+	
+	- Buffer: Lưu trữ tạm thời các log trước khi gửi chúng đến đích, giúp đảm bảo dữ liệu không bị mất ngay cả khi hệ thống đích bị gián đoạn.
+	
+	- Output: Gửi log đến các hệ thống lưu trữ và phân tích như Elasticsearch, MongoDB, S3, hay các hệ thống phân tích log như Splunk và Kibana.
+2. Tính năng chính
+	- Mở rộng: hỗ trợ hơn 500 plugin giúp tích hợp với các hệ thống khác nhau.
+	
+	- Tính nhất quán:  Fluentd sử dụng JSON làm định dạng dữ liệu nội bộ, giúp đồng nhất hóa dữ liệu từ nhiều nguồn.
+	
+	- Khả năng chịu lỗi cao: Buffer giúp lưu trữ tạm thời các log trước khi gửi đi, đảm bảo rằng dữ liệu không bị mất trong trường hợp xảy ra sự cố.
+	
+	- Khả năng mở rộng: Có thể xử lý lượng lớn log một cách hiệu quả, phù hợp cho các hệ thống phân tán.
+3. Ứng dụng:
+	- Thu thập log từ các container: Đặc biệt phổ biến trong các hệ thống Kubernetes, Fluentd thường được sử dụng để thu thập log từ các container -> gửi đến hệ thống giám sát và phân tích.
+	
+	- Lưu trữ và phân tích log: Kết hợp với các công cụ như Elasticsearch, Kibana để tạo ra các dashboard trực quan hoặc để thực hiện phân tích chuyên sâu.
+	
+	- Cấu hình của Fluentd được viết trong file td-agent.conf hoặc fluent.conf
+===> Fluentd là một lựa chọn mạnh mẽ cho việc quản lý log trong các hệ thống hiện đại, đặc biệt là trong các môi trường microservices và containerized.
